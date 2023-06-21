@@ -7,6 +7,10 @@
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {}
+	},
+	"containerEnv": {
+		"GEM_PATH": "/workspaces/${localWorkspaceFolderBasename}/.gem",
+		"GEM_HOME": "/workspaces/${localWorkspaceFolderBasename}/.gem"
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
