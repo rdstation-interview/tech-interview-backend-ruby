@@ -1,12 +1,11 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@1.1.4
-  gcp-gcr: circleci/gcp-gcr@0.14.1
   
 jobs:
   test:
     docker:
-      - image: cimg/ruby:3.0.3-node
+      - image: cimg/ruby:3.2.2-node
         environment:
           COVERAGE: 'true'
           POSTGRES_URL: localhost
@@ -40,91 +39,8 @@ jobs:
                   echo "Test doesnt exist. Skip coverage"
               fi
 
-  build-image:
-    executor: gcp-gcr/default
-    environment:
-      GOOGLE_COMPUTE_ZONE: us-central1-a
-    steps:
-      - checkout
-      - run:
-          name: Setup Google Service Account
-          command: |
-            echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-      - gcp-gcr/gcr-auth
-      - gcp-gcr/build-image:
-          image: tech-interview-challenge
-          extra_build_args: '--build-arg JFROG_USERNAME --build-arg JFROG_PASSWORD --rm=false -t gcr.io/${GOOGLE_PROJECT_ID}/tech-interview-challenge:$CIRCLE_SHA1'
-      - gcp-gcr/push-image:
-          image: tech-interview-challenge
-          tag: $CIRCLE_SHA1
-      - store_artifacts:
-          path: /tmp/artifacts
-          destination: artifacts
-
-  spinnaker-notify:
-    machine: true
-    parameters:
-      production:
-        type: boolean
-        default: false
-    steps:
-      - checkout
-      - when:
-          condition: << parameters.production >>
-          steps:
-            - run:
-                name: Export Spinnaker variables
-                command: |
-                  echo 'export ENDPOINT=$SPINNAKER_PRODUCTION_ENDPOINT' >> $BASH_ENV
-                  echo 'export WEBHOOK_SECRET=$SPINNAKER_PRODUCTION_SECRET' >> $BASH_ENV
-                  source $BASH_ENV
-      - unless:
-          condition: << parameters.production >>
-          steps:
-            - run:
-                name: Export Spinnaker variables
-                command: |
-                  echo 'export ENDPOINT=$SPINNAKER_STAGING_ENDPOINT' >> $BASH_ENV
-                  echo 'export WEBHOOK_SECRET=$SPINNAKER_STAGING_SECRET' >> $BASH_ENV
-                  source $BASH_ENV
-      - run:
-          name: Trigger Spinnaker deploy pipeline
-          command: |
-            export SHORT_GIT_HASH=$(echo $CIRCLE_SHA1 | cut -c -7)
-            export PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
-            envsubst < ./ci-build.json > payload.json
-            curl -o response.txt -s -w "%{http_code}" -i $ENDPOINT --fail -X POST -H "content-type: application/json" -d @payload.json
-
-
 workflows:
   all-tests:
     jobs:
       - test:
           context: front-hub
-      - build-image:
-          context:
-          - front-hub
-          - gcr-credentials
-          requires:
-            - test
-      - deploy-staging:
-          type: approval
-          requires:
-           - build-image
-      - spinnaker-notify:
-          name: spinnaker-notify-staging
-          context: 
-            - gcr-credentials
-          requires:
-            - deploy-staging
-      - spinnaker-notify:
-          name: spinnaker-notify-production
-          production: true
-          filters:
-            branches:
-              only:
-                - main
-          context:
-          - gcr-credentials
-          requires:
-            - build-image
