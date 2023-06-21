@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: tech-interview-challenge
+  annotations:
+    circleci.com/project-slug: github/ResultadosDigitais/tech-interview-challenge
+    github.com/project-slug: ResultadosDigitais/tech-interview-challenge
+  labels:
+    rdstation.com/type: internal
+    language: ruby
+spec:
+  type: service
+  lifecycle: production
+  owner: group:default/devtools
