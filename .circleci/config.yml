@@ -5,7 +5,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/ruby:3.1.4-node
+      - image: cimg/ruby:3.2.2-node
         environment:
           COVERAGE: 'true'
           POSTGRES_URL: localhost
