@@ -8,8 +8,8 @@ jobs:
       - image: cimg/ruby:3.2.2-node
         environment:
           COVERAGE: 'true'
-          POSTGRES_URL: localhost
           RAILS_ENV: test
+          DATABASE_URL: postres://postgres:postgres@localhost:5432/tech-interview-challenge_tests
       - image: cimg/postgres:13.4
         environment:
           POSTGRES_USER: postgres
