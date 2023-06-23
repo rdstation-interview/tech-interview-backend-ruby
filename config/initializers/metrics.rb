@@ -1,1 +1,0 @@
-Microservice::Toolkit::Metrics.configure
