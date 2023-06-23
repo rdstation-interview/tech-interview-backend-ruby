@@ -23,7 +23,6 @@ jobs:
           command: |
             bundle exec rails db:create --trace
             bundle exec rails db:migrate
-      - run: ./cc-test-reporter before-build
       - run: bundle exec rspec --profile 10
 
 workflows:
