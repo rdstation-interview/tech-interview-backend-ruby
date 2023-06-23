@@ -11,7 +11,7 @@
 	"containerEnv": {
 		"GEM_PATH": "/workspaces/${localWorkspaceFolderBasename}/.gem",
 		"GEM_HOME": "/workspaces/${localWorkspaceFolderBasename}/.gem"
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -21,7 +21,7 @@
 	// "forwardPorts": [3000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "bundle install && rake db:setup",
+	"postCreateCommand": "bundle install -j4 && rake db:setup",
 
 	// Configure tool-specific properties.
 	// "customizations": {},

@@ -49,14 +49,8 @@ end
 
 group :development, :test do
   gem "rspec-rails", require: false
-  gem "rexml", "~> 3.2", ">= 3.2.4"
-  gem "simplecov", "0.17.1"
 end
-gem "ddtrace", require: "ddtrace/auto_instrument"
 
-source "https://resultadosdigitais.jfrog.io/resultadosdigitais/api/gems/gems" do
-  gem "microservice-toolkit"
-end
 
 Dir.glob("components/**/*.gemspec") do |gemspec|
   path      = File.dirname(gemspec)
@@ -64,9 +58,6 @@ Dir.glob("components/**/*.gemspec") do |gemspec|
 
   gem component, path: path
 end
-
-gem 'rollbar'
-
 
 # Optional gems
 
