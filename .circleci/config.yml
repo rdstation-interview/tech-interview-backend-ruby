@@ -17,12 +17,6 @@ jobs:
           POSTGRES_PASSWORD: password
     steps:
       - checkout
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-      - run: bundle config resultadosdigitais.jfrog.io $JFROG_USERNAME:$JFROG_PASSWORD
       - ruby/install-deps
       - run:
           name: Set up DB
@@ -31,16 +25,8 @@ jobs:
             bundle exec rails db:migrate
       - run: ./cc-test-reporter before-build
       - run: bundle exec rspec --profile 10
-      - run:
-          command: |
-            if ./cc-test-reporter format-coverage -d -t simplecov -o coverage/upload.json && ! [ -z "$CC_TEST_REPORTER_ID" ]; then
-               ./cc-test-reporter upload-coverage -d --input coverage/upload.json
-              else
-                  echo "Test doesnt exist. Skip coverage"
-              fi
 
 workflows:
   all-tests:
     jobs:
-      - test:
-          context: front-hub
+      - test
