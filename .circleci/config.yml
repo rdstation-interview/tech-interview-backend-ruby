@@ -9,7 +9,7 @@ jobs:
         environment:
           COVERAGE: 'true'
           RAILS_ENV: test
-          DATABASE_URL: postres://postgres:postgres@localhost:5432/tech-interview-challenge_tests
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/tech-interview-challenge_tests
       - image: cimg/postgres:13.4
         environment:
           POSTGRES_USER: postgres
