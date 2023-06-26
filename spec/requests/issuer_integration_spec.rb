@@ -17,7 +17,7 @@ RSpec.describe 'Issuer Integration', type: :request do
     end
 
     context 'when the transaction amount is less than $1k' do
-      it 'declines the transaction' do
+      it 'approves the transaction' do
         payload = {
           amount: 700,
           card_number: "4321123443211234",
@@ -31,7 +31,7 @@ RSpec.describe 'Issuer Integration', type: :request do
     end
 
     context 'when the transaction amount is equal to $1k' do
-      it 'declines the transaction' do
+      it 'approves the transaction' do
         payload = {
           amount: 1000,
           card_number: "4321123443211234",
