@@ -11,7 +11,7 @@ RSpec.describe 'Issuer Integration', type: :request do
 
         post '/api/auth_transactions', params: payload
 
-        expect(response.code).to eq 422
+        expect(response.code.to_i).to eq 422
         expect(JSON.parse(response.body)).to eq message: "Not enough funds"
       end
     end
