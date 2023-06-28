@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Issuer Integration', type: :request do
-  xdescribe '/api/auth_transactions' do
+  describe '/api/auth_transactions' do
     context 'when the transaction amount greater than $1k' do
       it 'declines the transaction' do
         payload = {
@@ -11,8 +11,8 @@ RSpec.describe 'Issuer Integration', type: :request do
 
         post '/api/auth_transactions', params: payload
 
-        expect(response.code.to_i).to eq 422
-        expect(JSON.parse(response.body)).to eq message: "Not enough funds"
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq 422
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq message: "Not enough funds"
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe 'Issuer Integration', type: :request do
         post '/api/auth_transactions', params: payload
 
         expect(response.code).to eq 201
-        expect(JSON.parse(response.body)).to eq message: "OK"
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq message: "OK"
       end      
     end
 
@@ -40,7 +40,7 @@ RSpec.describe 'Issuer Integration', type: :request do
         post '/api/auth_transactions', params: payload
 
         expect(response.code).to eq 201
-        expect(JSON.parse(response.body)).to eq message: "OK"
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq message: "OK"
       end      
     end
   end
