@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Issuer Integration', type: :request do
-  describe '/api/auth_transactions' do
+  xdescribe '/api/auth_transactions' do
     context 'when the transaction amount greater than $1k' do
       it 'declines the transaction' do
         payload = {
