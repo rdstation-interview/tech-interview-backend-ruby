@@ -28,8 +28,12 @@
 		"vscode": {
 			"extensions": [
 				"editorconfig.editorconfig",
-				"rebornix.ruby"
-			]
+				"rebornix.ruby",
+				"ms-vsliveshare.vsliveshare"
+			],
+			"settings": {
+				"liveshare.autoShareTerminals": true
+			}
 		}
 	}
 

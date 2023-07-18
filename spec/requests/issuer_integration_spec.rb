@@ -13,7 +13,7 @@ RSpec.describe 'Issuer Integration', type: :request do
 
         expect(response.code).to eq 201
         expect(JSON.parse(response.body, symbolize_names: true)).to eq message: 'OK'
-      end      
+      end
     end
 
     context 'when the transaction amount is equal to $1k' do
@@ -27,7 +27,7 @@ RSpec.describe 'Issuer Integration', type: :request do
 
         expect(response.code).to eq 201
         expect(JSON.parse(response.body, symbolize_names: true)).to eq message: 'OK'
-      end      
+      end
     end
 
     context 'when the transaction amount is greater than $1k' do
