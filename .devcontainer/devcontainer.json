@@ -32,8 +32,7 @@
 				"ms-vsliveshare.vsliveshare"
 			],
 			"settings": {
-				"liveshare.autoShareTerminals": true,
-				"liveshare.sharedTerminalWidth": 240
+				"liveshare.autoShareTerminals": true
 			}
 		}
 	}
