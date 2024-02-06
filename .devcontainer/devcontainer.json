@@ -21,7 +21,7 @@
 	// "forwardPorts": [3000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bundle install -j4 && rake db:setup",
+	"postCreateCommand": "bundle install -j4 && rake db:setup && RAILS_ENV=test rake db:setup",
 
 	// Configure tool-specific properties.
 	"customizations": {
